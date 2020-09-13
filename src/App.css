@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+        "image-container sidebar-container"
+        "slider-container sidebar-container";
+    height: 100vh;
+    width: 100vw;
+    background-color: #dadada;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.image-container {
+    grid-area: image-container;
+    background-image: url("https://source.unsplash.com/en7G3hTSjBQ");
+    width: 100%;
+    height: 100%;
+    background-position: top center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-.App-link {
-  color: #61dafb;
+.sidebar-container {
+    grid-area: sidebar-container;
+    background-color: hsl(265, 100%, 86%);
+    border-left: 1px solid hsl(265, 100%, 56%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar-item {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: hsl(265, 100%, 86%);
+    padding: 1rem;
+    position: relative;
+    transition: background-color 150ms;
+    width: 100%;
+}
+
+.sidebar-item:hover,
+.sidebar-item:focus {
+    background-color: hsl(265, 100%, 76%);
+}
+
+.sidebar-item.active {
+    background-color: hsl(265, 100%, 70%);
+}
+
+.sidebar-item::after {
+    position: absolute;
+    content: "";
+    width: 80%;
+    left: 10%;
+    bottom: 0;
+    height: 1px;
+    background-color: hsl(265, 100%, 46%);
+}
+
+.sidebar-item:last-child::after {
+    display: none;
+}
+
+.slider-container {
+    grid-area: slider-container;
+    margin-top: 2rem;
+    padding: 2rem;
+}
+
+.slider {
+    width: 100%;
+    cursor: pointer;
 }

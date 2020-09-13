@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Slider from "./components/Slider";
+import Sidebar from "./components/Sidebar";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [selectedProperty, setSelectedProperty] = useState(null);
+    const [updatedValue, setUpdatedValue] = useState(null);
+
+    const changeStyles = () => {
+        let filter = "";
+
+        if (selectedProperty) {
+            filter += `${selectedProperty.property}(${selectedProperty.value}${selectedProperty.unit})`;
+        }
+
+        return { filter };
+    };
+
+    return (
+        <div className="container">
+            <div className="image-container" style={changeStyles()} />
+
+            <Sidebar
+                selectedProperty={selectedProperty}
+                setSelectedProperty={(property) => setSelectedProperty(property)}
+                updatedValue={updatedValue}
+                setUpdatedValue={() => setUpdatedValue(null)}
+            />
+
+            {selectedProperty && (
+                <Slider
+                    min={selectedProperty.range.min}
+                    max={selectedProperty.range.max}
+                    value={selectedProperty.value}
+                    changeSelectedPropertyValue={(value) => {
+                        setSelectedProperty({ ...selectedProperty, value });
+                        setUpdatedValue({ property: selectedProperty.property, value });
+                    }}
+                />
+            )}
+        </div>
+    );
 }
 
 export default App;
